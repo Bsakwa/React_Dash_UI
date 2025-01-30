@@ -2,6 +2,9 @@
 
 A modern, interactive dashboard built with React, Vite, and Material UI. This project is part of a frontend development learning journey.
 
+![uidash](./react-dashboard/public/userdash.png)
+
+
 ## 🚀 Quick Start
 
 ```bash

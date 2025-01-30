@@ -1,0 +1,52 @@
+### Node Modules ###
+node_modules/
+
+### Vite Build Output ###
+dist/
+
+### Environment Variables ###
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+### Logs ###
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+### Editor Directories ###
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+### Mac System Files ###
+.DS_Store
+
+### Linux System Files ###
+*.swp
+
+### Windows System Files ###
+Thumbs.db
+*.bak
+
+### Optional: TypeScript Build ###
+*.tsbuildinfo
+
+### Optional: Vite Cache ###
+.vite/
+
+### Optional: Storybook Cache ###
+.storybook-out/
+
+### Ignore package manager lock files (optional) ###
+# Uncomment the one you want to ignore
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
