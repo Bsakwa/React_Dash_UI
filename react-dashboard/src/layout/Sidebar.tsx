@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme } from "@mui/material/styles";
 import { Home, BarChart, Settings, Users, Mail, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const navItems = [
   { title: "Dashboard", icon: <Home className="w-6 h-6" />, path: "/" },
@@ -66,9 +67,9 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
 
       <nav className="p-4">
         {navItems.map((item) => (
-          <a
+          <Link
             key={item.title}
-            href={item.path}
+            to={item.path} // Use "to" instead of "href"
             className={`
               flex items-center gap-4 p-3 rounded-lg transition-all duration-200
               ${isCollapsed ? 'justify-center w-12 mx-auto' : 'w-full'}
@@ -86,10 +87,9 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
             }`}>
               {item.title}
             </span>
-          </a>
+          </Link>
         ))}
       </nav>
     </aside>
   );
 };
-

@@ -1,8 +1,14 @@
 // src/App.tsx
 import { useState, useEffect } from "react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { getTheme } from "./theme/theme";
 import { MainLayout } from "./layout/MainLayout";
+import { Dashboard } from "./pages/Dashboard";
+import { Analytics } from "./pages/Analytics";
+import { Users } from "./pages/Users";
+import { Messages } from "./pages/Messages";
+import { Settings } from "./pages/Settings";
 import "./index.css";
 
 function App() {
@@ -20,12 +26,19 @@ function App() {
   return (
     <ThemeProvider theme={getTheme(darkMode ? "dark" : "light")}>
       <CssBaseline />
-      <MainLayout darkMode={darkMode} setDarkMode={setDarkMode}>
-        <div className="p-6">
-          <h1 className="text-2xl font-bold">Dashboard</h1>
-        </div>
-      </MainLayout>
+      <Router>
+        <MainLayout darkMode={darkMode} setDarkMode={setDarkMode}>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/messages" element={<Messages />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </MainLayout>
+      </Router>
     </ThemeProvider>
   );
 }
+
 export default App;
