@@ -1,4 +1,4 @@
-name: NodeJS with Grunt
+name: NodeJS with Vite
 
 on:
   push:
@@ -27,5 +27,5 @@ jobs:
       run: |
         cd react-dashboard
         npm install
-        grunt
+        npm run build
 
