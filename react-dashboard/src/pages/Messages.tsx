@@ -137,6 +137,8 @@ export const Messages = () => {
           backgroundColor: theme.palette.background.paper,
           boxShadow: theme.shadows[1],
           borderRadius: theme.shape.borderRadius,
+          borderColor: theme.palette.divider, // Added border color
+          borderWidth: 1, // Added border width
         }}
       >
         <CardContent className="p-0">
