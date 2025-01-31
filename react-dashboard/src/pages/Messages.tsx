@@ -1,12 +1,21 @@
-// src/pages/Messages.tsx
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Star, Trash2, Archive } from "lucide-react";
-import { useTheme } from "@mui/material/styles";
+import { useTheme, alpha } from "@mui/material/styles";
+
+interface Message {
+  id: number;
+  from: string;
+  subject: string;
+  preview: string;
+  time: string;
+  isStarred: boolean;
+  isRead: boolean;
+}
 
 export const Messages = () => {
   const theme = useTheme();
 
-  const messages = [
+  const messages: Message[] = [
     {
       id: 1,
       from: "John Doe",
@@ -74,7 +83,7 @@ export const Messages = () => {
       id: 8,
       from: "Grace Lee",
       subject: "Team Meeting Agenda",
-      preview: "Here’s the agenda for our next team meeting. Please review...",
+      preview: "Here's the agenda for our next team meeting. Please review...",
       time: "6 days ago",
       isStarred: false,
       isRead: true,
@@ -82,80 +91,135 @@ export const Messages = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center mt-8"> {/* Added margin-top here */}
-        <h1 className="text-3xl font-bold tracking-tight" style={{ color: theme.palette.text.primary }}>
+    <div className="p-6 space-y-6">
+      <div className="flex justify-between items-center">
+        <h1 
+          className="text-3xl font-bold tracking-tight"
+          style={{ color: theme.palette.text.primary }}
+        >
           Messages
         </h1>
         <div className="flex gap-2">
           <button
-            className="p-2 hover:bg-secondary rounded-md"
-            style={{ backgroundColor: theme.palette.background.default }}
+            className="p-2 rounded-lg transition-colors duration-200"
+            style={{ 
+              backgroundColor: alpha(theme.palette.background.default, 0.6),
+              '&:hover': {
+                backgroundColor: alpha(theme.palette.background.default, 0.8),
+              }
+            }}
           >
-            <Archive className="w-5 h-5" style={{ color: theme.palette.text.primary }} />
+            <Archive 
+              className="w-5 h-5" 
+              style={{ color: theme.palette.text.secondary }}
+            />
           </button>
           <button
-            className="p-2 hover:bg-secondary rounded-md"
-            style={{ backgroundColor: theme.palette.background.default }}
+            className="p-2 rounded-lg transition-colors duration-200"
+            style={{ 
+              backgroundColor: alpha(theme.palette.background.default, 0.6),
+              '&:hover': {
+                backgroundColor: alpha(theme.palette.background.default, 0.8),
+              }
+            }}
           >
-            <Trash2 className="w-5 h-5" style={{ color: theme.palette.text.primary }} />
+            <Trash2 
+              className="w-5 h-5" 
+              style={{ color: theme.palette.text.secondary }}
+            />
           </button>
         </div>
       </div>
 
-      <Card style={{ backgroundColor: theme.palette.background.paper }}>
-        <CardContent className="p-0 divide-y divide-border">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className="flex items-center gap-4 p-4 hover:bg-muted/50 transition-colors cursor-pointer"
-              style={{ backgroundColor: theme.palette.background.paper }}
-            >
-              <div className="flex items-center gap-4 flex-1">
-                <button className="text-muted-foreground hover:text-primary">
-                  <Star
-                    className={`w-5 h-5 ${
-                      message.isStarred ? "fill-yellow-400 stroke-yellow-400" : ""
-                    }`}
-                    style={{ color: theme.palette.text.secondary }}
-                  />
-                </button>
-                <Mail className="w-5 h-5" style={{ color: theme.palette.text.secondary }} />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <p
-                      className={`font-medium ${
-                        !message.isRead ? "text-primary" : ""
-                      }`}
-                      style={{ color: !message.isRead ? theme.palette.primary.main : theme.palette.text.primary }}
+      <Card
+        className="overflow-hidden"
+        style={{
+          backgroundColor: theme.palette.background.paper,
+          boxShadow: theme.shadows[1],
+          borderRadius: theme.shape.borderRadius,
+        }}
+      >
+        <CardContent className="p-0">
+          <div className="divide-y divide-border">
+            {messages.map((message, index) => (
+              <div
+                key={message.id}
+                className="group transition-colors duration-200"
+                style={{ 
+                  backgroundColor: message.isRead 
+                    ? theme.palette.background.paper
+                    : alpha(theme.palette.primary.main, 0.04),
+                  borderBottom: index === messages.length - 1 
+                    ? 'none' 
+                    : `1px solid ${theme.palette.divider}`,
+                }}
+              >
+                <div className="flex items-center gap-4 p-4 hover:bg-black/5">
+                  <div className="flex items-center gap-4 flex-1 min-w-0">
+                    <button 
+                      className="transition-transform hover:scale-110 focus:outline-none"
+                      aria-label={message.isStarred ? "Unstar message" : "Star message"}
                     >
-                      {message.from}
-                    </p>
-                    <span
-                      className="text-sm text-muted-foreground"
+                      <Star
+                        className={`w-5 h-5 transition-colors ${
+                          message.isStarred ? "fill-yellow-400 stroke-yellow-400" : ""
+                        }`}
+                        style={{ 
+                          color: message.isStarred 
+                            ? "#FCD34D"
+                            : theme.palette.text.secondary 
+                        }}
+                      />
+                    </button>
+                    
+                    <Mail 
+                      className="w-5 h-5 flex-shrink-0" 
                       style={{ color: theme.palette.text.secondary }}
-                    >
-                      {message.time}
-                    </span>
+                    />
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <p
+                          className="font-medium truncate"
+                          style={{ 
+                            color: !message.isRead 
+                              ? theme.palette.primary.main
+                              : theme.palette.text.primary 
+                          }}
+                        >
+                          {message.from}
+                        </p>
+                        <span
+                          className="text-sm flex-shrink-0"
+                          style={{ color: theme.palette.text.secondary }}
+                        >
+                          {message.time}
+                        </span>
+                      </div>
+                      
+                      <p
+                        className="text-sm font-medium truncate mt-0.5"
+                        style={{ color: theme.palette.text.primary }}
+                      >
+                        {message.subject}
+                      </p>
+                      
+                      <p
+                        className="text-sm truncate mt-0.5"
+                        style={{ color: theme.palette.text.secondary }}
+                      >
+                        {message.preview}
+                      </p>
+                    </div>
                   </div>
-                  <p
-                    className="text-sm font-medium"
-                    style={{ color: theme.palette.text.primary }}
-                  >
-                    {message.subject}
-                  </p>
-                  <p
-                    className="text-sm text-muted-foreground truncate"
-                    style={{ color: theme.palette.text.secondary }}
-                  >
-                    {message.preview}
-                  </p>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </CardContent>
       </Card>
     </div>
   );
 };
+
+export default Messages;

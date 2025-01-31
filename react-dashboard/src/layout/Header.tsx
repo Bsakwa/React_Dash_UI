@@ -1,3 +1,4 @@
+// Header.tsx
 import React, { useEffect, useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import { Settings, Sun, Moon } from "lucide-react";
@@ -13,7 +14,6 @@ export const Header = ({ darkMode, setDarkMode, isCollapsed }: HeaderProps) => {
   const [avatarUrl, setAvatarUrl] = useState<string>("");
 
   useEffect(() => {
-    // Fetch a random user avatar from the randomuser.me API
     fetch("https://randomuser.me/api/")
       .then((response) => response.json())
       .then((data) => {
@@ -27,50 +27,68 @@ export const Header = ({ darkMode, setDarkMode, isCollapsed }: HeaderProps) => {
 
   return (
     <header
-      className={`h-16 border-b fixed top-0 right-0 transition-all duration-300 ${
+      className={`h-16 fixed top-0 right-0 transition-all duration-300 ${
         isCollapsed ? "left-20" : "left-64"
       } flex justify-between items-center px-6`}
       style={{
         backgroundColor: theme.palette.background.paper,
-        borderColor: theme.palette.divider,
+        borderBottom: `1px solid ${theme.palette.divider}`,
+        boxShadow: theme.shadows[1]
       }}
     >
-      {/* Search Bar */}
       <input
         type="search"
         placeholder="Search..."
-        className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 transition-colors duration-200 w-64"
+        className="px-4 py-2 rounded-lg focus:outline-none transition-colors duration-200 w-64"
         style={{
-          backgroundColor: theme.palette.background.default,
+          backgroundColor: theme.palette.background.light,
           color: theme.palette.text.primary,
-          borderColor: theme.palette.divider,
+          border: `1px solid ${theme.palette.divider}`,
+          '&:focus': {
+            borderColor: theme.palette.primary.main,
+            boxShadow: `0 0 0 2px ${theme.palette.primary.main}25`,
+          }
         }}
       />
 
       <div className="flex items-center gap-4">
-        {/* Dark Mode Toggle */}
         <button
           onClick={() => setDarkMode(!darkMode)}
-          className="p-2 rounded-full transition-all duration-200  cursor-pointer"
-          style={{ color: theme.palette.text.primary }}
+          className="p-2 rounded-full transition-all duration-200"
+          style={{
+            backgroundColor: theme.palette.background.light,
+            color: theme.palette.text.secondary,
+            '&:hover': {
+              backgroundColor: theme.palette.background.default,
+              color: theme.palette.primary.main,
+            }
+          }}
         >
           {darkMode ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
         </button>
 
-        {/* Settings Button */}
         <button
-          className="p-2 rounded-full transition-all duration-200 focus:outline-none cursor-pointer"
-          style={{ color: theme.palette.text.primary }}
+          className="p-2 rounded-full transition-all duration-200"
+          style={{
+            backgroundColor: theme.palette.background.light,
+            color: theme.palette.text.secondary,
+            '&:hover': {
+              backgroundColor: theme.palette.background.default,
+              color: theme.palette.primary.main,
+            }
+          }}
         >
           <Settings className="w-5 h-5" />
         </button>
 
-        {/* Profile Avatar */}
         {avatarUrl ? (
           <img
             src={avatarUrl}
             alt="Profile Avatar"
             className="w-8 h-8 rounded-full cursor-pointer transition-transform duration-200 hover:scale-105"
+            style={{
+              border: `2px solid ${theme.palette.primary.main}`,
+            }}
           />
         ) : (
           <div

@@ -1,143 +1,155 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, alpha } from "@mui/material/styles";
 
-export const getTheme = (mode: "light" | "dark") =>
-  createTheme({
+export const getTheme = (mode: "light" | "dark") => {
+  // Define base colors
+  const primaryBase = {
+    light: "#6366F1", // Indigo
+    dark: "#818CF8",  // Lighter indigo for dark mode
+  };
+  
+  const secondaryBase = {
+    light: "#EC4899", // Pink
+    dark: "#F472B6",  // Lighter pink for dark mode
+  };
+
+  // Enhanced color palette with modern colors
+  const palette = {
+    mode,
+    primary: {
+      main: mode === "dark" ? primaryBase.dark : primaryBase.light,
+      light: mode === "dark" ? alpha(primaryBase.dark, 0.8) : alpha(primaryBase.light, 0.8),
+      dark: mode === "dark" ? alpha(primaryBase.dark, 1.2) : alpha(primaryBase.light, 1.2),
+      contrastText: "#FFFFFF",
+    },
+    secondary: {
+      main: mode === "dark" ? secondaryBase.dark : secondaryBase.light,
+      light: mode === "dark" ? alpha(secondaryBase.dark, 0.8) : alpha(secondaryBase.light, 0.8),
+      dark: mode === "dark" ? alpha(secondaryBase.dark, 1.2) : alpha(secondaryBase.light, 1.2),
+      contrastText: "#FFFFFF",
+    },
+    success: {
+      main: "#10B981",
+      light: "#34D399",
+      dark: "#059669",
+      contrastText: "#FFFFFF",
+    },
+    warning: {
+      main: "#F59E0B",
+      light: "#FBBF24",
+      dark: "#D97706",
+      contrastText: "#FFFFFF",
+    },
+    info: {
+      main: "#3B82F6",
+      light: "#60A5FA",
+      dark: "#2563EB",
+      contrastText: "#FFFFFF",
+    },
+    error: {
+      main: "#EF4444",
+      light: "#F87171",
+      dark: "#DC2626",
+      contrastText: "#FFFFFF",
+    },
+    background: {
+      // Sophisticated grey palette for light mode
+      default: mode === "dark" ? "#1A1A1A" : "#E5E7EB",
+      paper: mode === "dark" ? "#242424" : "#F3F4F6",
+      light: mode === "dark" ? "#2D2D2D" : "#F9FAFB",
+    },
+    text: {
+      primary: mode === "dark" ? "#F9FAFB" : "#1F2937",
+      secondary: mode === "dark" ? "#D1D5DB" : "#4B5563",
+      disabled: mode === "dark" ? "#6B7280" : "#9CA3AF",
+    },
+    divider: mode === "dark" ? alpha("#FFFFFF", 0.12) : alpha("#000000", 0.12),
+  };
+
+  return createTheme({
+    palette,
     typography: {
-      fontFamily: "Poppins, sans-serif",
+      fontFamily: '"Poppins", "system-ui", -apple-system, sans-serif',
       h1: {
-        fontSize: "3.5rem",
+        fontSize: "3.75rem",
         fontWeight: 700,
         lineHeight: 1.2,
+        letterSpacing: "-0.02em",
       },
       h2: {
-        fontSize: "2.75rem",
+        fontSize: "3rem",
+        fontWeight: 600,
+        lineHeight: 1.2,
+        letterSpacing: "-0.01em",
+      },
+      h3: {
+        fontSize: "2.25rem",
         fontWeight: 600,
         lineHeight: 1.3,
       },
-      h3: {
-        fontSize: "2rem",
-        fontWeight: 600,
-        lineHeight: 1.4,
-      },
       h4: {
-        fontSize: "1.75rem",
+        fontSize: "1.875rem",
         fontWeight: 500,
-        lineHeight: 1.5,
+        lineHeight: 1.4,
       },
       h5: {
         fontSize: "1.5rem",
         fontWeight: 500,
-        lineHeight: 1.6,
+        lineHeight: 1.5,
       },
       h6: {
         fontSize: "1.25rem",
         fontWeight: 500,
-        lineHeight: 1.7,
+        lineHeight: 1.6,
       },
       body1: {
         fontSize: "1rem",
-        fontWeight: 400,
-        lineHeight: 1.6,
+        lineHeight: 1.5,
+        letterSpacing: "0.00938em",
       },
       body2: {
         fontSize: "0.875rem",
-        fontWeight: 400,
-        lineHeight: 1.6,
+        lineHeight: 1.57,
+        letterSpacing: "0.00714em",
       },
       button: {
-        textTransform: "none", // Buttons with normal case text
+        textTransform: "none",
         fontWeight: 600,
-      },
-    },
-    palette: {
-      mode,
-      primary: {
-        main: mode === "dark" ? "#90caf9" : "#3f50b5", // Soft blue for dark, vibrant blue for light
-        light: mode === "dark" ? "#e3f2fd" : "#757de8",
-        dark: mode === "dark" ? "#42a5f5" : "#002984",
-      },
-      secondary: {
-        main: mode === "dark" ? "#ffab91" : "#f44336", // Coral for dark, red for light
-        light: mode === "dark" ? "#ffccbc" : "#ff7961",
-        dark: mode === "dark" ? "#d84315" : "#ba000d",
-      },
-      success: {
-        main: "#4caf50",
-        light: "#81c784",
-        dark: "#388e3c",
-      },
-      warning: {
-        main: "#ff9800",
-        light: "#ffb74d",
-        dark: "#f57c00",
-      },
-      info: {
-        main: "#2196f3",
-        light: "#64b5f6",
-        dark: "#1976d2",
-      },
-      error: {
-        main: "#f44336",
-        light: "#e57373",
-        dark: "#d32f2f",
-      },
-      background: {
-        default: mode === "dark" ? "#0D1B2A" : "#F8F9FA", // Dark blue for dark mode, very light gray for light mode
-        paper: mode === "dark" ? "#1B263B" : "#FFFFFF", // Slightly lighter dark blue for paper in dark mode, white for light mode
-      },
-      text: {
-        primary: mode === "dark" ? "#E0E0E0" : "#212121", // Light gray for dark mode, dark gray for light mode
-        secondary: mode === "dark" ? "#B0B0B0" : "#4A4A4A", // Lighter gray for secondary text in dark mode
+        letterSpacing: "0.02857em",
       },
     },
     shape: {
-      borderRadius: 12, // Rounded corners for a modern look
+      borderRadius: 16,
     },
     shadows: [
       "none",
-      "0px 2px 4px rgba(0, 0, 0, 0.1)", // Subtle shadow for elevation 1
-      "0px 4px 8px rgba(0, 0, 0, 0.1)", // Slightly stronger shadow for elevation 2
-      "0px 6px 12px rgba(0, 0, 0, 0.15)", // Even stronger shadow for elevation 3
-      "0px 8px 16px rgba(0, 0, 0, 0.2)", // Strong shadow for elevation 4
-      ...Array(20).fill("none"), // Fill the rest with none or custom shadows
+      `0px 2px 4px ${alpha("#000000", 0.05)}`,
+      `0px 4px 6px ${alpha("#000000", 0.07)}`,
+      `0px 6px 8px ${alpha("#000000", 0.08)}`,
+      `0px 8px 12px ${alpha("#000000", 0.1)}`,
+      `0px 12px 16px ${alpha("#000000", 0.12)}`,
+      ...Array(19).fill("none"),
     ],
-    transitions: {
-      easing: {
-        easeInOut: "cubic-bezier(0.4, 0, 0.2, 1)",
-        easeOut: "cubic-bezier(0.0, 0, 0.2, 1)",
-        easeIn: "cubic-bezier(0.4, 0, 1, 1)",
-        sharp: "cubic-bezier(0.4, 0, 0.6, 1)",
-      },
-      duration: {
-        shortest: 150,
-        shorter: 200,
-        short: 250,
-        standard: 300,
-        complex: 375,
-        enteringScreen: 225,
-        leavingScreen: 195,
-      },
-    },
-    breakpoints: {
-      values: {
-        xs: 0,
-        sm: 600,
-        md: 960,
-        lg: 1280,
-        xl: 1920,
-      },
-    },
     components: {
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: 8, // Rounded buttons
-            padding: "8px 16px",
+            borderRadius: 12,
+            padding: "10px 20px",
+            fontWeight: 600,
+            textTransform: "none",
+            transition: "all 0.2s ease-in-out",
           },
           contained: {
-            boxShadow: "none", // No shadow for contained buttons
+            boxShadow: "none",
             "&:hover": {
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)", // Shadow on hover
+              boxShadow: `0px 8px 12px ${alpha("#000000", 0.15)}`,
+              transform: "translateY(-1px)",
+            },
+          },
+          outlined: {
+            borderWidth: 2,
+            "&:hover": {
+              borderWidth: 2,
             },
           },
         },
@@ -145,17 +157,42 @@ export const getTheme = (mode: "light" | "dark") =>
       MuiCard: {
         styleOverrides: {
           root: {
-            borderRadius: 12, // Rounded cards
-            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)", // Subtle shadow for cards
+            borderRadius: 16,
+            boxShadow: mode === "dark" 
+              ? `0px 4px 8px ${alpha("#000000", 0.5)}`
+              : `0px 4px 8px ${alpha("#000000", 0.1)}`,
+            transition: "all 0.2s ease-in-out",
+            "&:hover": {
+              transform: "translateY(-2px)",
+              boxShadow: mode === "dark"
+                ? `0px 8px 16px ${alpha("#000000", 0.6)}`
+                : `0px 8px 16px ${alpha("#000000", 0.12)}`,
+            },
           },
         },
       },
       MuiTextField: {
         styleOverrides: {
           root: {
-            borderRadius: 8, // Rounded text fields
+            "& .MuiOutlinedInput-root": {
+              borderRadius: 12,
+              transition: "all 0.2s ease-in-out",
+              "&:hover": {
+                backgroundColor: mode === "dark"
+                  ? alpha("#FFFFFF", 0.05)
+                  : alpha("#000000", 0.02),
+              },
+            },
+          },
+        },
+      },
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundImage: "none",
           },
         },
       },
     },
   });
+};
