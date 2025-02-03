@@ -45,12 +45,14 @@ export const Analytics = () => {
       value: lastMonth.users,
       change: calculateChange(lastMonth.users, previousMonth.users),
       icon: Users,
+      bgColor: theme.palette.primary.light,
     },
     {
       title: "Revenue",
       value: `$${lastMonth.revenue.toLocaleString()}`,
       change: calculateChange(lastMonth.revenue, previousMonth.revenue),
       icon: DollarSign,
+      bgColor: theme.palette.success.light,
     },
     {
       title: "Profit Margin",
@@ -60,6 +62,7 @@ export const Analytics = () => {
         previousMonth.profit / previousMonth.revenue
       ),
       icon: TrendingUp,
+      bgColor: theme.palette.secondary.light,
     },
   ];
 
@@ -98,15 +101,16 @@ export const Analytics = () => {
           </button>
         </div>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((stat) => (
           <Card 
             key={stat.title} 
             className="hover:shadow-lg transition-shadow"
-            style={{ backgroundColor: theme.palette.background.paper, borderColor: theme.palette.divider,
-          borderWidth: 0
-         }}
+            style={{ 
+              backgroundColor: theme.palette.background.paper, 
+              borderColor: theme.palette.divider,
+              borderWidth: 0 
+            }}
           >
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -114,7 +118,15 @@ export const Analytics = () => {
                   <p className="text-sm font-medium" style={{ color: theme.palette.text.secondary }}>{stat.title}</p>
                   <p className="text-2xl font-bold" style={{ color: theme.palette.text.primary }}>{stat.value}</p>
                 </div>
-                <stat.icon className="h-6 w-6" style={{ color: theme.palette.text.secondary }} />
+                <div 
+                  className="p-3 rounded-full"
+                  style={{ backgroundColor: stat.bgColor }}
+                >
+                  <stat.icon 
+                    className="h-6 w-6" 
+                    style={{ color: stat.color }} 
+                  />
+                </div>
               </div>
               <div className="mt-4 flex items-center">
                 {parseFloat(stat.change) > 0 ? (
@@ -133,13 +145,14 @@ export const Analytics = () => {
           </Card>
         ))}
       </div>
-
       <div className="grid gap-6 md:grid-cols-2">
         <Card 
           className="hover:shadow-lg transition-shadow"
-          style={{ backgroundColor: theme.palette.background.paper, borderColor: theme.palette.divider,
-          borderWidth: 0
-         }}
+          style={{ 
+            backgroundColor: theme.palette.background.paper, 
+            borderColor: theme.palette.divider,
+            borderWidth: 0 
+          }}
         >
           <CardHeader>
             <CardTitle style={{ color: theme.palette.text.primary }}>Revenue & Profit Trends</CardTitle>
@@ -181,12 +194,13 @@ export const Analytics = () => {
             </div>
           </CardContent>
         </Card>
-
         <Card 
           className="hover:shadow-lg transition-shadow"
-          style={{ backgroundColor: theme.palette.background.paper, borderColor: theme.palette.divider,
-          borderWidth: 0,
-        }}
+          style={{ 
+            backgroundColor: theme.palette.background.paper, 
+            borderColor: theme.palette.divider,
+            borderWidth: 0 
+          }}
         >
           <CardHeader>
             <CardTitle style={{ color: theme.palette.text.primary }}>User Growth</CardTitle>
@@ -215,12 +229,13 @@ export const Analytics = () => {
             </div>
           </CardContent>
         </Card>
-
         <Card 
           className="hover:shadow-lg transition-shadow md:col-span-2"
-          style={{ backgroundColor: theme.palette.background.paper, borderColor: theme.palette.divider,
-          borderWidth: 0,
-         }}
+          style={{ 
+            backgroundColor: theme.palette.background.paper, 
+            borderColor: theme.palette.divider,
+            borderWidth: 0 
+          }}
         >
           <CardHeader>
             <CardTitle style={{ color: theme.palette.text.primary }}>User Acquisition Sources</CardTitle>

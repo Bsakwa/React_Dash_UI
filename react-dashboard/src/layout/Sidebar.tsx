@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme } from "@mui/material/styles";
-import { Home, BarChart, Settings, Users, Mail, ChevronLeft, ChevronRight } from "lucide-react";
+import { Home, BarChart, Settings, Users, Mail, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
@@ -38,38 +38,33 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
           backgroundColor: theme.palette.background.paper,
         }}
       >
-        <h1
-          className={`text-xl font-semibold transition-all duration-300 ${
-            isCollapsed ? "opacity-0 w-0" : "opacity-100 w-auto"
-          }`}
-          style={{ color: theme.palette.text.primary }}
-        >
-          Dashboard
-        </h1>
-
-        <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="absolute right-4 top-1/2 -translate-y-1/2 p-1.5 rounded-full transition-all duration-200 hover:scale-105"
-          style={{
-            backgroundColor: theme.palette.mode === "dark" 
-              ? theme.palette.grey[800] 
-              : theme.palette.grey[100],
-            color: theme.palette.text.secondary,
-            border: `1px solid ${theme.palette.divider}`,
-            "&:hover": {
-              backgroundColor: theme.palette.mode === "dark"
-                ? theme.palette.grey[700]
-                : theme.palette.grey[200],
-              color: theme.palette.primary.main,
-            },
-          }}
-        >
-          {isCollapsed ? (
-            <ChevronRight className="w-4 h-4" />
-          ) : (
-            <ChevronLeft className="w-4 h-4" />
-          )}
-        </button>
+        <div className="flex items-center justify-between w-full">
+          <h1
+            className={`text-xl font-semibold transition-all duration-300 ${
+              isCollapsed ? "opacity-0 w-0" : "opacity-100 w-auto"
+            }`}
+            style={{ color: theme.palette.text.primary }}
+          >
+            Dashboard
+          </h1>
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="p-1.5 rounded-lg mr-3 transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 z-50"
+            style={{
+              backgroundColor: theme.palette.mode === "dark" 
+                ? theme.palette.grey[800] 
+                : theme.palette.grey[100],
+              color: theme.palette.text.secondary,
+              border: `1px solid ${theme.palette.divider}`,
+            }}
+          >
+            {isCollapsed ? (
+              <PanelLeftOpen className="w-4 h-4" />
+            ) : (
+              <PanelLeftClose className="w-4 h-4" />
+            )}
+          </button>
+        </div>
       </div>
 
       <nav className="p-4">
@@ -82,22 +77,17 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
               to={item.path}
               className={`
                 flex items-center gap-4 p-3 rounded-lg transition-all duration-200
-                ${isCollapsed ? "justify-center w-12 mx-auto" : "w-full"}
+                ${isCollapsed ? "justify-center w-15 mx-auto relative" : "w-full"}
                 ${isActive ? "bg-opacity-10 shadow-sm" : "hover:bg-opacity-5"}
               `}
               style={{
                 backgroundColor: isActive 
-                  ? theme.palette.primary.main + "1A"  // 10% opacity
+                  ? theme.palette.primary.main + "1A"
                   : "transparent",
                 color: isActive 
                   ? theme.palette.primary.main
                   : theme.palette.text.secondary,
                 transform: `scale(${isActive ? 1.02 : 1})`,
-                "&:hover": {
-                  backgroundColor: theme.palette.primary.main + "0A", // 5% opacity
-                  color: theme.palette.primary.main,
-                  transform: "scale(1.02)",
-                },
               }}
             >
               <div className={`flex-shrink-0 w-6 h-6 transition-transform duration-200 ${
@@ -112,6 +102,15 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
               >
                 {item.title}
               </span>
+              {isActive && isCollapsed && (
+                <div 
+                  className="absolute left-0 w-1 h-full rounded-r"
+                  style={{ 
+                    backgroundColor: theme.palette.primary.main,
+                    top: 0
+                  }}
+                />
+              )}
             </Link>
           );
         })}
