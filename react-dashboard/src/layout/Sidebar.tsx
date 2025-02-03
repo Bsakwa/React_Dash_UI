@@ -49,7 +49,7 @@ export const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
           </h1>
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-1.5 rounded-lg mr-3 transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 z-50"
+            className="p-1.5 cursor-pointer rounded-lg mr-3 transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 z-50"
             style={{
               backgroundColor: theme.palette.mode === "dark" 
                 ? theme.palette.grey[800] 

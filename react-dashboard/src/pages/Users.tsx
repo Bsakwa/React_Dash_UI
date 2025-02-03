@@ -103,6 +103,7 @@ export const Users = () => {
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.primary.contrastText,
             boxShadow: theme.shadows[2],
+            cursor: "pointer", // Add cursor pointer here
           }}
         >
           Add User
@@ -195,6 +196,7 @@ export const Users = () => {
                         style={{
                           color: theme.palette.primary.main,
                           padding: "6px 12px",
+                          cursor: "pointer", // Add cursor pointer here
                         }}
                       >
                         Edit

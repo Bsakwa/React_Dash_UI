@@ -54,7 +54,7 @@ export const Header = ({ darkMode, setDarkMode, isCollapsed }: HeaderProps) => {
       <div className="flex items-center gap-4">
         <button
           onClick={() => setDarkMode(!darkMode)}
-          className="p-2 rounded-full transition-all duration-200"
+          className="p-2 cursor-pointer rounded-full transition-all duration-200"
           style={{
             backgroundColor: theme.palette.background.light,
             color: theme.palette.text.secondary,
