@@ -3,12 +3,14 @@ import { useTheme, alpha } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 
 interface User {
-  id: number;
-  name: string;
+  userId: number;
+  username: string;
   email: string;
-  role: string;
+  passwordHash: string;
+  createdAt: string;
+  updatedAt: string;
   status: string;
-  avatar: string;
+  avatar: string; // Added avatar field
 }
 
 export const Users = () => {
@@ -64,16 +66,20 @@ export const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("https://randomuser.me/api/?results=6");
+        // Fetch users from your API
+        const response = await fetch("http://localhost:5172/api/Users");
         const data = await response.json();
-        const formattedUsers = data.results.map((user: any, index: number) => ({
-          id: index + 1,
-          name: `${user.name.first} ${user.name.last}`,
-          email: user.email,
-          role: index % 2 === 0 ? "Admin" : "User",
-          status: index % 3 === 0 ? "Inactive" : "Active",
-          avatar: user.picture.thumbnail,
+
+        // Fetch random avatars for each user
+        const avatarResponse = await fetch(`https://randomuser.me/api/?results=${data.length}`);
+        const avatarData = await avatarResponse.json();
+
+        // Combine user data with random avatars
+        const formattedUsers = data.map((user: User, index: number) => ({
+          ...user,
+          avatar: avatarData.results[index].picture.thumbnail,
         }));
+
         setUsers(formattedUsers);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -108,8 +114,8 @@ export const Users = () => {
           backgroundColor: theme.palette.background.paper,
           boxShadow: theme.shadows[1],
           borderRadius: theme.shape.borderRadius,
-          borderColor: theme.palette.divider, // Added border color
-          borderWidth: 1, // Added border width
+          borderColor: theme.palette.divider,
+          borderWidth: 1,
         }}
       >
         <CardContent className="p-0">
@@ -139,7 +145,7 @@ export const Users = () => {
               <tbody>
                 {users.map((user, index) => (
                   <tr
-                    key={user.id}
+                    key={user.userId}
                     style={{ 
                       borderBottom: index === users.length - 1 ? 'none' : `1px solid ${theme.palette.divider}`,
                       backgroundColor: 'transparent',
@@ -151,7 +157,7 @@ export const Users = () => {
                       <div className="flex items-center gap-3">
                         <img
                           src={user.avatar}
-                          alt={user.name}
+                          alt={user.username}
                           className="w-10 h-10 rounded-full"
                           style={{ 
                             border: `2px solid ${theme.palette.primary.main}`,
@@ -162,7 +168,7 @@ export const Users = () => {
                             className="font-medium"
                             style={{ color: theme.palette.text.primary }}
                           >
-                            {user.name}
+                            {user.username}
                           </div>
                           <div 
                             className="text-sm"
@@ -174,8 +180,8 @@ export const Users = () => {
                       </div>
                     </td>
                     <td className="p-4">
-                      <span style={getRoleStyles(user.role)}>
-                        {user.role}
+                      <span style={getRoleStyles(user.status === "Active" ? "Admin" : "User")}>
+                        {user.status === "Active" ? "Admin" : "User"}
                       </span>
                     </td>
                     <td className="p-4">
